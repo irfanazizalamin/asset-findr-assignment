@@ -29,11 +29,7 @@
         </div>
       </template>
 
-      <v-data-table :search="search" :headers="headers" :items="data">
-        <!-- <template v-slot:header.AssetID="{ column }">
-          {{ column.title.toUpperCase() }}
-        </template> -->
-
+      <v-data-table :headers="headers" :items="filteredData">
         <template v-slot:item.Status="{ value }">
           <v-chip :color="getStatusColor(value)">
             {{ value }}
@@ -53,13 +49,14 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useAssetStore } from "../../store/asset";
 import { formatDate, formatPrice } from "../../utils/helpers";
 
 const assetStore = useAssetStore();
 const search = ref("");
 const data = ref([]);
+const filteredData = ref([]);
 
 const headers = [
   { title: "Asset ID/Tag", key: "AssetID" },
@@ -83,8 +80,19 @@ function getStatusColor(color) {
   }
 }
 
+watch(search, (value) => {
+  if (!value) {
+    filteredData.value = data.value;
+  } else {
+    filteredData.value = data.value.filter((item) => {
+      return (item.AssetName || "").toLowerCase().includes(value.toLowerCase());
+    });
+  }
+});
+
 onMounted(() => {
   data.value = assetStore.assets;
+  filteredData.value = assetStore.assets;
 });
 </script>
 
