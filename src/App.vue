@@ -1,6 +1,5 @@
 <script setup>
 import Default from "./layout/Default.vue";
-import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
@@ -8,7 +7,7 @@ import HelloWorld from "./components/HelloWorld.vue";
     <default>
       <router-view v-slot="{ Component, route }">
         <transition
-          :name="route.meta.transition || 'scroll-x-transition'"
+          name="scroll-x-transition"
           mode="out-in"
         >
           <component :is="Component" :key="route.path" />
