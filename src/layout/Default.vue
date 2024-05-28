@@ -2,8 +2,8 @@
   <div>
     <sidebar />
     <nav-header />
-    <div class="md:ml-[280px] pb-32">
-      <div class="px-4 mt-20 md:px-6 md:mt-28">
+    <div class="md:ml-[256px] pb-32 bg-gray-100">
+      <div class="mt-[76px] p-6">
         <slot />
       </div>
     </div>
