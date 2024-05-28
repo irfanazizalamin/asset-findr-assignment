@@ -23,4 +23,12 @@ export default [
       title: "Settings",
     },
   },
+  {
+    path: "/asset/add",
+    name: "add-asset",
+    component: () => import("../pages/AddAsset"),
+    meta: {
+      title: "Manage Asset",
+    },
+  },
 ];

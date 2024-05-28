@@ -1,58 +1,97 @@
 <template>
   <div>
-    <v-card title="List Asset" flat>
+    <v-card flat class="bg-white">
+      <template #title>
+        <div class="p-1">
+          <h5 class="text-xl font-semibold">List Asset</h5>
+        </div>
+      </template>
       <template #text>
         <div class="flex items-center gap-2">
-          <v-btn variant="flat" prepend-icon="mdi-plus" class="bg-primary">
-            <template v-slot:prepend>
-              <v-icon color="white"></v-icon>
-            </template>
-            <span class="text-white"> Add Asset </span>
-          </v-btn>
+          <router-link to="/asset/add">
+            <v-btn variant="flat" prepend-icon="mdi-plus" class="bg-primary">
+              <template v-slot:prepend>
+                <v-icon color="white"></v-icon>
+              </template>
+              <span class="text-white"> Add Asset </span>
+            </v-btn>
+          </router-link>
           <v-text-field
             v-model="search"
-            label="Search Asset"
-            variant="outlined"
             hide-details
             single-line
-            class="max-w-[240px]"
+            label="Search Asset..."
+            variant="outlined"
+            density="compact"
             direction="horizontal"
+            class="max-w-[240px]"
           ></v-text-field>
         </div>
       </template>
 
-      <v-data-table :search="search" :items="data"></v-data-table>
+      <v-data-table :search="search" :headers="headers" :items="data">
+        <!-- <template v-slot:header.AssetID="{ column }">
+          {{ column.title.toUpperCase() }}
+        </template> -->
+
+        <template v-slot:item.Status="{ value }">
+          <v-chip :color="getStatusColor(value)">
+            {{ value }}
+          </v-chip>
+        </template>
+        <template v-slot:item.PurchaseCost="{ value }">
+          <span class="font-semibold"> Rp {{ formatPrice(value) }} </span>
+        </template>
+        <template v-slot:item.PurchaseDate="{ value }">
+          <span>
+            {{ formatDate(value) }}
+          </span>
+        </template>
+      </v-data-table>
     </v-card>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from "vue";
-import DataSet from "../../assets/data/data.json";
+import { useAssetStore } from "../../store/asset";
+import { formatDate, formatPrice } from "../../utils/helpers";
 
+const assetStore = useAssetStore();
 const search = ref("");
 const data = ref([]);
 
+const headers = [
+  { title: "Asset ID/Tag", key: "AssetID" },
+  { title: "Asset Name", key: "AssetName" },
+  { title: "Description", key: "Description" },
+  { title: "Purchase Cost", key: "PurchaseCost" },
+  { title: "Purchase Date", key: "PurchaseDate" },
+  { title: "Status", key: "Status" },
+];
+
+function getStatusColor(color) {
+  switch (color) {
+    case "Active":
+      return "success";
+    case "Inactive":
+      return "error";
+    case "In Repair":
+      return "warning";
+    default:
+      return "primary";
+  }
+}
+
 onMounted(() => {
-  data.value = DataSet;
+  data.value = assetStore.assets;
 });
 </script>
 
 <style lang="scss" scoped>
 ::v-deep {
-  .v-card-text {
-    .v-input {
-      .v-field {
-        height: 40px;
-        .v-field__field {
-          height: 40px;
-        }
-        .v-field__input {
-          padding: 8px;
-          min-height: inherit;
-        }
-      }
-    }
+  .v-data-table .v-data-table__th {
+    background-color: #f9fafb;
   }
 }
 </style>
