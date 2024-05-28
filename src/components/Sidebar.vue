@@ -33,7 +33,7 @@ const menuList = ref([
     icon: 'mdi-wallet-outline',
   },
   {
-    name: "Setting",
+    name: "Settings",
     route: "/settings",
     icon: 'mdi-cog-outline',
   },

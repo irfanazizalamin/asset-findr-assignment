@@ -1,5 +1,5 @@
 <template>
-    <div>hai home</div>
+    <div>Home Page</div>
 </template>
 
 <script setup></script>
