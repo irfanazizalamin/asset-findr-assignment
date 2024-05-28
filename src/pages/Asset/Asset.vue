@@ -88,10 +88,4 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
-::v-deep {
-  .v-data-table .v-data-table__th {
-    background-color: #f9fafb;
-  }
-}
-</style>
+<style lang="scss" scoped src="./Asset.scss"></style>
