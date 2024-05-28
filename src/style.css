@@ -3,6 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-* {
-  @apply text-neutral-600;
+button {
+  text-transform: unset !important;
 }
