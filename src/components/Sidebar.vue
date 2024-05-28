@@ -8,7 +8,7 @@
         class="sidebar-menu"
         :class="isActive(item.route) ? 'active' : ''"
       >
-        <div class="h-6 w-6 bg-black"></div>
+        <v-icon :icon="item.icon" size="large"></v-icon>
         <h6>{{ item.name }}</h6>
       </router-link>
     </template>
@@ -25,19 +25,23 @@ const menuList = ref([
   {
     name: "Home",
     route: "/",
+    icon: 'mdi-home-outline',
   },
   {
     name: "Manage Asset",
     route: "/asset",
+    icon: 'mdi-wallet-outline',
   },
   {
     name: "Setting",
     route: "/settings",
+    icon: 'mdi-cog-outline',
   },
 ]);
 
 function isActive(route) {
-  return route === currentRoute.value.path;
+  if (route === "/") return currentRoute.value.path === route;
+  return currentRoute.value.path.includes(route);
 }
 </script>
 
@@ -48,7 +52,7 @@ function isActive(route) {
 }
 
 .sidebar-menu {
-  @apply px-4 py-2 cursor-pointer w-full flex gap-6 mt-2
+  @apply px-4 py-2 cursor-pointer w-full flex items-center gap-6 mt-2
     hover:bg-primay-lighten transition-all font-medium;
 }
 

@@ -2,7 +2,7 @@
   <div>
     <sidebar />
     <nav-header />
-    <div class="md:ml-[256px] pb-32 bg-gray-100">
+    <div class="md:ml-[256px] pb-32 bg-gray-100 min-h-screen">
       <div class="mt-[76px] p-6">
         <slot />
       </div>
