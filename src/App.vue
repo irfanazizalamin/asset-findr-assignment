@@ -1,20 +1,21 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+import Default from "./layout/Default.vue";
+import HelloWorld from "./components/HelloWorld.vue";
 </script>
 
 <template>
   <div>
-    <v-btn prepend-icon="$vuetify" append-icon="$vuetify">
-      Button
-    </v-btn>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <default>
+      <router-view v-slot="{ Component, route }">
+        <transition
+          :name="route.meta.transition || 'scroll-x-transition'"
+          mode="out-in"
+        >
+          <component :is="Component" :key="route.path" />
+        </transition>
+      </router-view>
+    </default>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
